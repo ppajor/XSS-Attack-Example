@@ -25,7 +25,7 @@ SECRET_KEY = '9oikp^4-ogqlolvrz$dnyw^oeiv_#@o%xzry=ze3yp4b4ywxj('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'django_filters',
     'xss_app'
@@ -50,6 +51,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+]
+
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:3000'
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -83,7 +90,7 @@ DATABASES = {
         'USER': 'admin',
         'PASSWORD': 'admin',
         'PORT': '5432',
-        'HOST': 'xss_db'
+        'HOST': 'xss_db_2'
     }
 }
 
