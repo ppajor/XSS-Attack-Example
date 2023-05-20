@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prosty formularz</title>
+	<style>
+        .container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 100px;
+        }
+        
+        h1{
+            margin-bottom: 60px;
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+            gap:24px;
+        }
+
+		input{
+            padding: 8px 16px;
+            border:1px solid lightgray;
+            border-radius: 4px;
+		}
+
+        .input-group{
+            display: flex;
+            align-items: center;
+            gap:8px;
+        }
+
+		button {
+            padding: 8px 16px;
+			background-color: dodgerblue;
+			color: #fff;
+			cursor: pointer;
+            border:0;
+            box-shadow: 1px 1px 8px #d9d9d9;
+            border-radius: 4px;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<h1>Prosty formularz</h1>
+	<form>
+        <div class="input-group">
+		<label for="name">Wprowadz tekst:</label>
+		<input type="text" id="username" name="username">
+		<input type="password" id="password" name="password">
+    </div>
+		<button type="submit">Wyślij</button>
+	</form>
+</div>
+	<script>
+		document.querySelector('form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const username = e.target['username'].value;
+    const password = e.target['password'].value;
+    fetch('http://127.0.0.1:8000/xss/token/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({username,password})
+    }).then(res => res.json())
+      .then(res => {
+        console.log(res);
+        window.localStorage.setItem('token', res.access);
+        window.location.href="./search.html";
+      });
+    })
+	</script>
+</body>
+</html>

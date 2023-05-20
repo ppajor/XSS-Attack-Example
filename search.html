@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prosty formularz</title>
+	<style>
+        .container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 100px;
+        }
+        
+        h1{
+            margin-bottom: 60px;
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+            gap:24px;
+        }
+
+		input{
+            padding: 8px 16px;
+            border:1px solid lightgray;
+            border-radius: 4px;
+		}
+
+        .input-group{
+            display: flex;
+            align-items: center;
+            gap:8px;
+        }
+
+		button {
+            padding: 8px 16px;
+			background-color: dodgerblue;
+			color: #fff;
+			cursor: pointer;
+            border:0;
+            box-shadow: 1px 1px 8px #d9d9d9;
+            border-radius: 4px;
+		}
+	</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prosty formularz</h1>
+        <form>
+            <input type="text" id="search" name="search">
+        </div>
+            <button type="submit">Wyślij</button>
+        </form>
+        <div id="results"></div>
+    </div>
+
+    <script>
+    document.querySelector('form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const searchText = e.target['search'].value;
+
+    fetch(`http://127.0.0.1:8000/xss/unsafe/search/?search=${searchText}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }).then(res =>
+    {
+        res.json();
+        console.log("res",res)
+    })
+      .then(res => {
+        res.forEach(item => {
+        const element = document.createElement('p');
+        const resultsDiv = document.getElementById('results');
+
+        element.innerText = item.content;
+        resultsDiv.appendChild(element);
+    });
+    });
+})
+    </script>
+</body>
+</html>
