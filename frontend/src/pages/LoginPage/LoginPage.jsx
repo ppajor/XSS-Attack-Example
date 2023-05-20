@@ -32,7 +32,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='mx-auto mt-24 max-w-[550px]'>
+    <div className='mx-auto mt-24 max-w-[550px] py-10'>
       <h1 className='mb-20 text-center text-6xl font-semibold text-[#232323]'>
         Login
       </h1>
