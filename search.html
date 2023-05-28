@@ -64,10 +64,8 @@
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     }).then(res =>
-    {
-        res.json();
-        console.log("res",res)
-    })
+        res.json()
+        )
       .then(res => {
         res.forEach(item => {
         const element = document.createElement('p');
