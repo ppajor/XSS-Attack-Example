@@ -55,26 +55,45 @@
     </div>
 
     <script>
+
+        async function getData(){
+            fetch(`http://127.0.0.1:8000/xss/unsafe/`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+            }).then(res =>
+                res.json()
+                )
+            .then(res => {
+                res.forEach(item => {
+                const element = document.createElement('p');
+                const resultsDiv = document.getElementById('results');
+
+                element.innerText = item.content;
+                resultsDiv.appendChild(element);
+            });
+            });
+        }
+
+    getData()
+
     document.querySelector('form').addEventListener('submit', function(e) {
     e.preventDefault();
     const searchText = e.target['search'].value;
 
-    fetch(`http://127.0.0.1:8000/xss/unsafe/search/?search=${searchText}`, {
+    fetch('http://127.0.0.1:8000/xss/unsafe/', {
+      method: 'POST',
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
       },
-    }).then(res =>
-        res.json()
-        )
+      body: JSON.stringify({content:searchText})
+    }).then(res => res.json())
       .then(res => {
-        res.forEach(item => {
-        const element = document.createElement('p');
-        const resultsDiv = document.getElementById('results');
+        getData();
+      });
 
-        element.innerText = item.content;
-        resultsDiv.appendChild(element);
-    });
-    });
+
 })
     </script>
 </body>
