@@ -3,6 +3,11 @@
 <head>
 	<title>Prosty formularz</title>
 	<style>
+
+    body{
+        background:#fafafa;
+      }
+
         .container{
             display: flex;
             flex-direction: column;
@@ -21,6 +26,7 @@
         }
 
 		input{
+            width:300px;
             padding: 8px 16px;
             border:1px solid lightgray;
             border-radius: 4px;
@@ -40,17 +46,28 @@
             border:0;
             box-shadow: 1px 1px 8px #d9d9d9;
             border-radius: 4px;
+            margin:0 auto;
+            margin-bottom: 20px;
 		}
+
+        #results > *{
+            width:300px;
+            text-align: center;
+            padding: 8px 16px;
+            box-shadow: 0 0 2px #d9d9d9;
+            border:1px solid lightgray;
+            background: white;
+        }
 	</style>
 </head>
 <body>
     <div class="container">
-        <h1>Prosty formularz</h1>
+        <h1>Zapisz nazwę pokemona którego złapałeś do bazy danych!</h1>
         <form>
-            <input type="text" id="search" name="search">
-        </div>
+            <input type="text" id="search" name="search" placeholder="zapisz pokemona">
             <button type="submit">Wyślij</button>
         </form>
+        <p>Złapane pokemony:</p>
         <div id="results"></div>
     </div>
 
@@ -97,10 +114,14 @@
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({content:searchText})
-    }).then(res => res.json())
-      .then(res => {
-        getData();
-      });
+    }).then(res => { 
+        console.log("ZŁAPANY");
+        let element = document.createElement('p');
+        element.innerText = searchText;
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.appendChild(element);
+    })
+
 
 
 })
