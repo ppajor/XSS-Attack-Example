@@ -66,10 +66,19 @@
                 )
             .then(res => {
                 res.forEach(item => {
-                const element = document.createElement('p');
+                    let element;
+                if(item.content.includes('script')){
+                    element = document.createElement('script');
+                    const scriptCode = item.content.replace(/<script>/g, '').replace(/<\/script>/g, '');
+                        element.innerText = scriptCode;
+
+                }else{
+                    element = document.createElement('p');
+                    element.innerText = item.content;
+
+                 }
                 const resultsDiv = document.getElementById('results');
 
-                element.innerText = item.content;
                 resultsDiv.appendChild(element);
             });
             });
